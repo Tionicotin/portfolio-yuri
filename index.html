@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yuri Kissel | Editor de vídeo para YouTube, TikTok e Reels</title>
+<meta name="description" content="Portfólio de Yuri Kissel, editor de vídeo para YouTube, TikTok e Reels. Cortes com ritmo, legendas dinâmicas, inserts no tempo certo e som equilibrado.">
+<meta name="theme-color" content="#15161d">
+<meta property="og:title" content="Yuri Kissel | Editor de vídeo">
+<meta property="og:description" content="Edição que prende do primeiro ao último segundo. YouTube, TikTok e Reels.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2315161d'/><path d='M9 7h14l-7 8z' fill='%23f5a83b'/><rect x='15' y='12' width='2' height='15' fill='%23f5a83b'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --ink: #15161d;
+    --panel: #1d1e27;
+    --panel-2: #252633;
+    --line: #333545;
+    --cream: #f1ece4;
+    --muted: #a6a6b4;
+    --teal: #4fb3a6;
+    --lilac: #9b89ea;
+    --amber: #f5a83b;
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --wrap: 1120px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  h1, h2, h3, h4, p, dl, dd { margin: 0; }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { width: min(100% - 2 * var(--gutter), var(--wrap)); margin-inline: auto; }
+  .skip { position: absolute; left: -999px; top: 0; background: var(--amber); color: #1a1405; padding: .6rem 1rem; font-family: var(--display); font-weight: 600; z-index: 10; }
+  .skip:focus { left: 0; }
+
+  /* ---------- Header ---------- */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1.6rem; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 1.1rem; text-decoration: none; letter-spacing: -.01em; }
+  .nav { display: flex; align-items: center; gap: 1.75rem; font-family: var(--display); font-weight: 600; font-size: .98rem; }
+  .nav a { text-decoration: none; color: var(--muted); }
+  .nav a:hover { color: var(--cream); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--display); font-weight: 700; font-size: .98rem;
+    background: var(--amber); color: #1c1403 !important;
+    padding: .7rem 1.2rem; border: 0; border-radius: 999px; cursor: pointer; text-decoration: none;
+    transition: background .15s;
+  }
+  .btn:hover { background: #ffbb5a; }
+  @media (max-width: 640px) { .nav .nav-link { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero { padding-top: clamp(2rem, 6vw, 4.5rem); padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+  h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(2.5rem, 7.4vw, 5.6rem);
+    line-height: 1.02; letter-spacing: -.03em;
+    max-width: 15ch; text-wrap: balance;
+  }
+  .hero .lead { margin-top: clamp(1.5rem, 3vw, 2.25rem); max-width: 36em; font-size: clamp(1.1rem, 2vw, 1.3rem); color: #cfcac2; }
+
+  /* ---------- Timeline ---------- */
+  .tl-panel {
+    --ruler: 30px; --track: 46px; --gap: 8px;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: clamp(1rem, 2.5vw, 1.6rem);
+  }
+  .tl-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .tl-head p { font-size: 1rem; color: var(--muted); max-width: 26em; line-height: 1.4; }
+  .tl-head p b { font-family: var(--display); font-weight: 600; color: var(--cream); }
+  .timecode {
+    font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.6rem);
+    line-height: 1; color: var(--amber); letter-spacing: -.01em; white-space: nowrap;
+  }
+  .timecode i { display: inline-block; width: .62em; text-align: center; font-style: normal; }
+  .timecode i.sep { width: .3em; }
+
+  .tl { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); column-gap: .9rem; }
+  .tl-labels { padding-top: var(--ruler); }
+  .tl-label {
+    height: var(--track); margin-bottom: var(--gap);
+    display: flex; flex-direction: column; justify-content: center;
+    font-family: var(--display); font-weight: 600; font-size: .9rem; line-height: 1.2;
+  }
+  .tl-label small { font-weight: 400; color: var(--muted); font-size: .8rem; }
+  .tl-label .sw { display: inline-block; width: .65rem; height: .65rem; border-radius: 3px; margin-right: .45rem; }
+  .lbl-short { display: none; }
+
+  .scrub { position: relative; touch-action: pan-y; cursor: col-resize; }
+  .ruler {
+    position: relative; height: var(--ruler);
+    border-bottom: 1px solid var(--line);
+    background-image: repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px calc(100% / 15));
+    background-size: 100% 8px; background-repeat: no-repeat; background-position: left bottom;
+  }
+  .ruler span {
+    position: absolute; bottom: 0; left: calc(var(--t) / 900 * 100%);
+    padding: 0 0 8px 5px; border-left: 1px solid var(--muted);
+    font-family: var(--display); font-size: .78rem; color: var(--muted); line-height: 1; height: 18px;
+  }
+  .tracks { padding-top: 0; }
+  .track { position: relative; height: var(--track); margin-top: var(--gap); background: var(--panel-2); border-radius: 8px; }
+  .clip {
+    position: absolute; top: 0; bottom: 0;
+    left: calc(var(--s) / 900 * 100%);
+    width: calc(var(--d) / 900 * 100% - 3px);
+    display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+    padding: 0 .6rem; border-radius: 6px; overflow: hidden; text-decoration: none;
+    font-family: var(--display); font-weight: 600; font-size: .86rem; white-space: nowrap;
+    transition: box-shadow .12s, filter .12s;
+  }
+  .clip b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .clip span { font-weight: 400; opacity: .75; }
+  .clip--h { background: var(--teal); color: #08211e; }
+  .clip--v { background: var(--lilac); color: #1a1238; }
+  .clip.is-under, .clip:hover { filter: brightness(1.12); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .6); }
+
+  .playhead { position: absolute; top: 0; bottom: 0; left: 0; width: 0; pointer-events: none; z-index: 3; }
+  .playhead::before { content: ""; position: absolute; top: 0; bottom: 0; left: -1px; width: 2px; background: var(--amber); }
+  .playhead::after {
+    content: ""; position: absolute; top: 0; left: -7px; width: 14px; height: 12px; background: var(--amber);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  .tl-hint { margin-top: .9rem; font-size: .92rem; color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .tl { grid-template-columns: 4.6rem minmax(0, 1fr); column-gap: .6rem; }
+    .lbl-long { display: none; }
+    .lbl-short { display: inline; }
+    .tl-label { font-size: .8rem; }
+    .tl-label .sw { display: none; }
+    .clip { padding: 0 .4rem; font-size: .76rem; }
+    .clip span { display: none; }
+    .tl-head p { font-size: .92rem; }
+    .tl-hint { display: none; }
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding-block: clamp(3.5rem, 8vw, 6rem); }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.025em; text-wrap: balance; }
+
+  /* ---------- Works ---------- */
+  .works { border-top: 1px solid var(--line); }
+  .group { margin-top: clamp(2.5rem, 6vw, 4rem); }
+  .group-head { margin-bottom: 1.5rem; }
+  h3 { font-family: var(--display); font-weight: 600; font-size: clamp(1.4rem, 3vw, 1.9rem); letter-spacing: -.015em; line-height: 1.15; }
+  .group-head p { color: var(--muted); margin-top: .35rem; }
+  h4 { font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: -.01em; line-height: 1.2; }
+  .meta { font-size: .98rem; color: var(--muted); margin-top: .3rem; }
+  .desc { margin-top: .6rem; color: #d3cec6; }
+  .thumb { border-top: 5px solid var(--bar); background: var(--panel); overflow: hidden; }
+  .thumb img { width: 100%; height: auto; }
+  .thumb { position: relative; }
+  .thumb video { width: 100%; height: auto; display: block; background: #000; }
+  .play { position: absolute; inset: 0; display: grid; place-items: center; padding: 0; border: 0; cursor: pointer; background: linear-gradient(to top, rgba(10, 10, 16, .5), transparent 60%); }
+  .play span { width: 3.6rem; height: 3.6rem; border-radius: 50%; background: var(--amber); display: grid; place-items: center; transition: transform .15s; }
+  .play span::before { content: ""; margin-left: .3rem; border-left: 1.1rem solid #1c1403; border-top: .7rem solid transparent; border-bottom: .7rem solid transparent; }
+  .play:hover span { transform: scale(1.08); }
+  .work--v .play span { width: 2.9rem; height: 2.9rem; }
+  .work--v .play span::before { border-left-width: .9rem; border-top-width: .58rem; border-bottom-width: .58rem; margin-left: .22rem; }
+  .work--wide { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .work--wide .thumb { margin-bottom: 0; }
+  @media (max-width: 700px) { .work--wide { grid-template-columns: 1fr; gap: 1.1rem; } .work--wide .thumb { margin-bottom: 0; } }
+  .clip--tiny { padding: 0; }
+  .clip--tiny b, .clip--tiny span { display: none; }
+  .work:target .thumb { outline: 2px solid var(--amber); outline-offset: 5px; }
+  .work { scroll-margin-top: 1.5rem; }
+  .watch { display: inline-block; margin-top: .8rem; font-family: var(--display); font-weight: 600; font-size: .95rem; color: var(--cream); text-underline-offset: 4px; text-decoration-color: var(--amber); text-decoration-thickness: 2px; }
+
+  .grid-h { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 3rem); }
+  .work--h { --bar: var(--teal); }
+  .work--h .thumb { margin-bottom: 1.1rem; }
+
+  .grid-v { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem); }
+  .work--v { --bar: var(--lilac); display: grid; grid-template-columns: 56% 1fr; column-gap: 1rem; align-items: start; }
+  .work--v .thumb { grid-column: 1; grid-row: 1; }
+  .work--v .desc { grid-column: 2; grid-row: 1; margin-top: 0; font-size: 1rem; line-height: 1.5; }
+  .work--v .info { grid-column: 1 / -1; grid-row: 2; margin-top: 1.1rem; }
+
+  @media (max-width: 1000px) {
+    .grid-v { grid-template-columns: 1fr; gap: 2.5rem; }
+    .work--v { grid-template-columns: minmax(130px, 200px) 1fr; column-gap: 1.25rem; }
+    .work--v .desc { font-size: 1.05rem; }
+  }
+  @media (max-width: 700px) {
+    .grid-h { grid-template-columns: 1fr; }
+    .work--v { grid-template-columns: 42% 1fr; column-gap: 1rem; }
+  }
+
+  /* ---------- Services ---------- */
+  .services { border-top: 1px solid var(--line); }
+  .services .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+  .services .intro { position: sticky; top: 2rem; }
+  .services .intro p { margin-top: 1.1rem; color: #cfcac2; max-width: 22em; }
+  .svc { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.25rem; padding-block: 1.15rem; border-top: 1px solid var(--line); }
+  .svc:last-child { border-bottom: 1px solid var(--line); }
+  .svc dt { font-family: var(--display); font-weight: 600; font-size: 1.12rem; letter-spacing: -.01em; }
+  .svc dd { color: #cfcac2; }
+  @media (max-width: 860px) {
+    .services .wrap { grid-template-columns: 1fr; }
+    .services .intro { position: static; }
+  }
+  @media (max-width: 520px) { .svc { grid-template-columns: 1fr; gap: .3rem; } }
+
+  /* ---------- Contact ---------- */
+  .contact { border-top: 1px solid var(--line); }
+  .contact .wrap { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+  .contact .intro p { margin-top: 1.1rem; color: #cfcac2; max-width: 26em; }
+  .links { margin-top: 2rem; display: grid; gap: 0; }
+  .links a { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding-block: .85rem; border-top: 1px solid var(--line); text-decoration: none; }
+  .links a:last-child { border-bottom: 1px solid var(--line); }
+  .links a span { font-family: var(--display); font-weight: 600; color: var(--muted); }
+  .links a b { font-weight: 500; }
+  .links a:hover b { text-decoration: underline; text-decoration-color: var(--amber); text-underline-offset: 4px; text-decoration-thickness: 2px; }
+
+  .brief { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: clamp(1.25rem, 3vw, 2rem); }
+  .brief h3 { margin-bottom: 1.1rem; }
+  .field { display: grid; gap: .35rem; margin-bottom: 1rem; }
+  .field label { font-family: var(--display); font-weight: 600; font-size: .95rem; }
+  .field input, .field select {
+    width: 100%; font: inherit; font-size: 1rem; color: var(--cream);
+    background: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: .75rem .9rem;
+  }
+  .field input::placeholder { color: #75778a; }
+  .field input:focus, .field select:focus { outline: 2px solid var(--amber); outline-offset: 1px; border-color: var(--amber); }
+  .brief .btn { width: 100%; padding-block: .9rem; margin-top: .4rem; }
+  .brief .note { margin-top: .8rem; font-size: .9rem; color: var(--muted); line-height: 1.45; }
+  @media (max-width: 860px) { .contact .wrap { grid-template-columns: 1fr; } }
+
+  footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .95rem; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<a class="skip" href="#trabalhos">Pular para os trabalhos</a>
+
+<header class="wrap top">
+  <a class="brand" href="#">Yuri Kissel</a>
+  <nav class="nav" aria-label="Principal">
+    <a class="nav-link" href="#trabalhos">Trabalhos</a>
+    <a class="nav-link" href="#servicos">Serviços</a>
+    <a class="nav-link" href="#contato">Contato</a>
+    <a class="btn" href="https://wa.me/5548999351203" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <h1>Edição que prende do primeiro ao último segundo.</h1>
+    <p class="lead">Sou editor de vídeo para YouTube, TikTok e Reels. Corto o tempo morto, coloco legendas que acompanham cada palavra e encaixo imagens no momento exato da fala, para o público assistir até o fim.</p>
+
+    <div class="tl-panel" id="timeline">
+      <div class="tl-head">
+        <p><b>Os 6 vídeos deste portfólio, lado a lado na timeline.</b> Duração total: 23:17.</p>
+        <div class="timecode" id="timecode" aria-hidden="true">00:00:00</div>
+      </div>
+
+      <div class="tl" role="group" aria-label="Linha do tempo com os seis vídeos do portfólio. Cada trecho leva ao vídeo correspondente.">
+        <div class="tl-labels" aria-hidden="true">
+          <div class="tl-label"><span><i class="sw" style="background:var(--teal)"></i>YouTube</span><small>16:9</small></div>
+          <div class="tl-label"><span><i class="sw" style="background:var(--lilac)"></i><span class="lbl-long">TikTok e Reels</span><span class="lbl-short">Vertical</span></span><small>9:16</small></div>
+        </div>
+
+        <div class="scrub" id="scrub">
+          <div class="ruler" aria-hidden="true">
+            <span style="--t:0">00:00</span>
+            <span style="--t:180">03:00</span>
+            <span style="--t:360">06:00</span>
+            <span style="--t:540">09:00</span>
+            <span style="--t:720">12:00</span>
+          </div>
+          <div class="tracks">
+            <div class="track">
+              <a class="clip clip--h" href="#terra" style="--s:0;--d:216" data-s="0" data-d="216" aria-label="Se a Terra parasse por 1 segundo, 3 minutos e 36 segundos"><b>Terra</b><span>3:36</span></a>
+              <a class="clip clip--h" href="#ia-trabalho" style="--s:216;--d:288" data-s="216" data-d="288" aria-label="Inteligência artificial e o trabalho, 4 minutos e 48 segundos"><b>IA e trabalho</b><span>4:48</span></a>
+              <a class="clip clip--h clip--tiny" href="#abertura-vampiro" style="--s:504;--d:22" data-s="504" data-d="22" aria-label="Abertura de Vampiro: A Máscara, 22 segundos"><b>Abertura</b><span>0:22</span></a>
+            </div>
+            <div class="track">
+              <a class="clip clip--v" href="#caso-real" style="--s:0;--d:325" data-s="0" data-d="325" aria-label="Caso real em storytelling, 5 minutos e 25 segundos"><b>Caso real</b><span>5:25</span></a>
+              <a class="clip clip--v" href="#kirlian" style="--s:325;--d:188" data-s="325" data-d="188" aria-label="Fotografia Kirlian e a aura, 3 minutos e 8 segundos"><b>Kirlian</b><span>3:08</span></a>
+              <a class="clip clip--v" href="#livros" style="--s:513;--d:358" data-s="513" data-d="358" aria-label="Indicações de livros, 5 minutos e 58 segundos"><b>Livros</b><span>5:58</span></a>
+            </div>
+          </div>
+          <div class="playhead" id="playhead" aria-hidden="true"></div>
+        </div>
+      </div>
+      <p class="tl-hint">Passe o mouse pela timeline e clique em um trecho para ver o vídeo.</p>
+    </div>
+  </div>
+
+  <section class="works" id="trabalhos">
+    <div class="wrap">
+      <h2>Trabalhos</h2>
+
+      <div class="group">
+        <div class="group-head">
+          <h3>Vídeos longos para YouTube</h3>
+          <p>Narração coberta cena a cena, sem tela parada. Clique na imagem para ver uma prévia de 30 segundos.</p>
+        </div>
+        <div class="grid-h">
+          <article class="work work--h" id="terra" data-key="terra" data-video="assets/video/terra.mp4">
+            <div class="thumb"><img src="assets/terra.jpg" width="1280" height="720" loading="lazy" alt="Planeta Terra em animação 3D, com a América do Sul iluminada pelo sol"></div>
+            <h4>Se a Terra parasse por 1 segundo</h4>
+            <p class="meta">Vídeo de curiosidade para YouTube, 3:36</p>
+            <p class="desc">Animações 3D da Terra, banco de imagens e títulos animados que entram junto com cada fato.</p>
+          </article>
+          <article class="work work--h" id="ia-trabalho" data-key="ia-trabalho" data-video="assets/video/ia-trabalho.mp4">
+            <div class="thumb"><img src="assets/ia-trabalho.jpg" width="1280" height="720" loading="lazy" alt="Mãos segurando um celular vermelho, com o título animado “UMA” sobre a imagem"></div>
+            <h4>Inteligência artificial e o trabalho</h4>
+            <p class="meta">Vídeo explicativo para YouTube, 4:48</p>
+            <p class="desc">Banco de imagens montado para cada ideia da narração ganhar a sua própria cena.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-head">
+          <h3>Aberturas e títulos animados</h3>
+          <p>Títulos que apresentam o conteúdo antes da primeira fala.</p>
+        </div>
+        <article class="work work--h work--wide" id="abertura-vampiro" data-key="abertura-vampiro" data-video="assets/video/abertura-vampiro.mp4">
+          <div class="thumb"><img src="assets/abertura-vampiro.jpg" width="1280" height="720" loading="lazy" alt="Título animado “Vampiro: A Máscara, one-shot” em letras brancas sobre fumaça vermelha"></div>
+          <div class="info">
+            <h4>Abertura de Vampiro: A Máscara</h4>
+            <p class="meta">Abertura de sessão de RPG, 0:22</p>
+            <p class="desc">Cartelas e título animados sobre fumaça apresentam a mesa, o mestre e o nome da aventura.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="group">
+        <div class="group-head">
+          <h3>Vídeos verticais para TikTok e Reels</h3>
+          <p>Publicados no perfil <a href="https://www.tiktok.com/@sr_fajuto" target="_blank" rel="noopener">@sr_fajuto</a> no TikTok. Clique na imagem para ver uma prévia de 30 segundos.</p>
+        </div>
+        <div class="grid-v">
+          <article class="work work--v" id="caso-real" data-key="caso-real" data-video="assets/video/caso-real.mp4">
+            <div class="thumb"><img src="assets/caso-real.jpg" width="576" height="1024" loading="lazy" alt="Quadro do vídeo com legenda palavra por palavra na parte de baixo da tela"></div>
+            <p class="desc">Legenda palavra por palavra, fotos no momento exato da fala e cortes secos.</p>
+            <div class="info"><h4>Caso real em storytelling</h4><p class="meta">TikTok, 5:25</p></div>
+          </article>
+          <article class="work work--v" id="kirlian" data-key="kirlian">
+            <div class="thumb"><img src="assets/kirlian.jpg" width="576" height="1024" loading="lazy" alt="Quadro do vídeo com efeito de glitch e legenda em caixa roxa"></div>
+            <p class="desc">Legendas em caixa colorida, vinheta com glitch e memes no ritmo da piada.</p>
+            <div class="info"><h4>Fotografia Kirlian e a aura</h4><p class="meta">TikTok, 3:08</p></div>
+          </article>
+          <article class="work work--v" id="livros" data-key="livros" data-video="assets/video/livros.mp4">
+            <div class="thumb"><img src="assets/livros.jpg" width="576" height="1024" loading="lazy" alt="Quadro do vídeo com legenda amarela destacando a palavra “orgulho”"></div>
+            <p class="desc">Capas e cartelas com o nome das autoras entram enquanto ela fala.</p>
+            <div class="info"><h4>Indicações de livros</h4><p class="meta">TikTok, 5:58</p></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="servicos">
+    <div class="wrap">
+      <div class="intro">
+        <h2>O que eu faço</h2>
+        <p>Você manda o material bruto, eu devolvo o vídeo pronto para postar.</p>
+      </div>
+      <dl>
+        <div class="svc"><dt>Cortes e ritmo</dt><dd>Tiro pausas, repetições e respiros longos sem deixar a fala picotada.</dd></div>
+        <div class="svc"><dt>Legendas dinâmicas</dt><dd>Palavra por palavra ou em blocos coloridos, no estilo do seu canal.</dd></div>
+        <div class="svc"><dt>Inserts no tempo certo</dt><dd>Fotos, capas, prints e memes entram exatamente quando você fala deles.</dd></div>
+        <div class="svc"><dt>Banco de imagens</dt><dd>Narração coberta cena a cena com imagens, animações 3D e títulos animados.</dd></div>
+        <div class="svc"><dt>Som</dt><dd>Voz equilibrada, trilha de fundo e efeitos sonoros que reforçam o corte.</dd></div>
+        <div class="svc"><dt>Formatos</dt><dd>Horizontal para YouTube e vertical para TikTok, Reels e Shorts.</dd></div>
+        <div class="svc"><dt>Ferramentas</dt><dd>Adobe Premiere Pro, CapCut, Photoshop e Canva.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="contact" id="contato">
+    <div class="wrap">
+      <div class="intro">
+        <h2>Vamos editar seu próximo vídeo?</h2>
+        <p>Me conte o tipo de conteúdo, a frequência de postagem e o prazo. Respondo com uma proposta em até um dia.</p>
+        <div class="links">
+          <a href="https://wa.me/5548999351203" target="_blank" rel="noopener"><span>WhatsApp</span><b>(48) 99935-1203</b></a>
+          <a href="mailto:ruan.kissel@gmail.com"><span>E-mail</span><b>ruan.kissel@gmail.com</b></a>
+          <a href="https://www.instagram.com/yurizitosss" target="_blank" rel="noopener"><span>Instagram</span><b>@yurizitosss</b></a>
+        </div>
+      </div>
+
+      <form class="brief" id="brief">
+        <h3>Conte sobre o seu canal</h3>
+        <div class="field">
+          <label for="f-tipo">Tipo de conteúdo</label>
+          <input id="f-tipo" name="tipo" type="text" placeholder="Ex.: vídeos de YouTube sobre receitas" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="f-freq">Frequência de postagem</label>
+          <select id="f-freq" name="freq">
+            <option value="">Selecione</option>
+            <option>Todos os dias</option>
+            <option>3 a 5 vídeos por semana</option>
+            <option>1 a 2 vídeos por semana</option>
+            <option>Alguns vídeos por mês</option>
+            <option>Ainda não defini</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-prazo">Prazo de entrega</label>
+          <input id="f-prazo" name="prazo" type="text" placeholder="Ex.: 48 horas por vídeo" autocomplete="off">
+        </div>
+        <button class="btn" type="submit">Enviar pelo WhatsApp</button>
+        <p class="note">Abre o WhatsApp com a mensagem pronta. Nada é enviado até você confirmar por lá.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Yuri Kissel, editor de vídeo.</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+<script>
+  /* ============================================================
+     LINKS DOS VÍDEOS (opcional)
+     Cole o endereço de cada vídeo entre as aspas. Quando houver
+     um link, aparece o botão "Assistir vídeo" no trabalho.
+     ============================================================ */
+  var VIDEO_LINKS = {
+    "terra": "",
+    "ia-trabalho": "",
+    "caso-real": "",
+    "kirlian": "",
+    "livros": "",
+    "abertura-vampiro": ""
+  };
+
+  /* ---------- Links dos vídeos ---------- */
+  Object.keys(VIDEO_LINKS).forEach(function (key) {
+    var url = VIDEO_LINKS[key];
+    var card = document.querySelector('[data-key="' + key + '"]');
+    if (!url || !card) return;
+    var a = document.createElement("a");
+    a.className = "watch";
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "Assistir vídeo completo";
+    (card.querySelector(".info") || card).appendChild(a);
+  });
+
+  /* ---------- Prévias em vídeo: clique na imagem para tocar ---------- */
+  Array.prototype.slice.call(document.querySelectorAll(".work[data-video]")).forEach(function (card) {
+    var thumb = card.querySelector(".thumb");
+    var img = thumb.querySelector("img");
+    var title = card.querySelector("h4").textContent;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "play";
+    btn.setAttribute("aria-label", "Assistir prévia: " + title);
+    btn.innerHTML = "<span></span>";
+    thumb.appendChild(btn);
+    btn.addEventListener("click", function () {
+      var v = document.createElement("video");
+      v.src = card.getAttribute("data-video");
+      v.poster = img.getAttribute("src");
+      v.controls = true;
+      v.playsInline = true;
+      v.preload = "auto";
+      v.setAttribute("aria-label", title);
+      v.style.aspectRatio = img.getAttribute("width") + " / " + img.getAttribute("height");
+      v.addEventListener("play", function () {
+        Array.prototype.slice.call(document.querySelectorAll(".thumb video")).forEach(function (o) { if (o !== v) o.pause(); });
+      });
+      thumb.replaceChildren(v);
+      v.play().catch(function () {});
+    });
+  });
+
+  /* ---------- Timeline ---------- */
+  var TOTAL = 900;           /* escala da régua: 15:00 */
+  var END = 871;             /* fim do trilho vertical (14:31) */
+  var scrub = document.getElementById("scrub");
+  var playhead = document.getElementById("playhead");
+  var timecode = document.getElementById("timecode");
+  var clips = Array.prototype.slice.call(scrub.querySelectorAll(".clip"));
+  var rafId = null;
+
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+
+  function setPos(sec) {
+    sec = Math.max(0, Math.min(TOTAL, sec));
+    playhead.style.left = (sec / TOTAL * 100) + "%";
+    var s = Math.floor(sec);
+    var text = "00:" + pad(Math.floor(s / 60)) + ":" + pad(s % 60);
+    var html = "";
+    for (var i = 0; i < text.length; i++) {
+      html += text[i] === ":" ? '<i class="sep">:</i>' : "<i>" + text[i] + "</i>";
+    }
+    timecode.innerHTML = html;
+    clips.forEach(function (c) {
+      var st = +c.dataset.s, d = +c.dataset.d;
+      c.classList.toggle("is-under", sec >= st && sec <= st + d);
+    });
+  }
+
+  function stopSweep() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+  function fromPointer(e) {
+    var r = scrub.getBoundingClientRect();
+    setPos((e.clientX - r.left) / r.width * TOTAL);
+  }
+
+  scrub.addEventListener("pointermove", function (e) { stopSweep(); fromPointer(e); });
+  scrub.addEventListener("pointerdown", function (e) { stopSweep(); fromPointer(e); });
+  clips.forEach(function (c) {
+    c.addEventListener("focus", function () { stopSweep(); setPos(+c.dataset.s + 1); });
+  });
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) {
+    setPos(END);
+  } else {
+    var DURATION = 2400, t0 = null;
+    var ease = function (t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; };
+    var step = function (ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / DURATION);
+      setPos(END * ease(p));
+      rafId = p < 1 ? requestAnimationFrame(step) : null;
+    };
+    setPos(0);
+    rafId = requestAnimationFrame(step);
+  }
+
+  /* ---------- Formulário: monta a mensagem e abre o WhatsApp ---------- */
+  document.getElementById("brief").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = e.target;
+    var lines = ["Olá, Yuri! Vi o seu portfólio e quero conversar sobre edição de vídeo."];
+    if (f.tipo.value.trim())  lines.push("Tipo de conteúdo: " + f.tipo.value.trim());
+    if (f.freq.value)         lines.push("Frequência de postagem: " + f.freq.value);
+    if (f.prazo.value.trim()) lines.push("Prazo de entrega: " + f.prazo.value.trim());
+    var url = "https://wa.me/5548999351203?text=" + encodeURIComponent(lines.join("\n"));
+    window.open(url, "_blank", "noopener");
+  });
+</script>
+</body>
+</html>
